@@ -32,6 +32,32 @@ function LinkedList(){
         length++
     }
 
+    this.remove = function()
+    {
+        if(head==null)
+        {
+            return 
+        }
+        if(head.next===null)
+        {
+            data=head.data
+            head=null
+            length=0
+            return data
+        }
+        else
+        {
+            currentNode=head
+            while(currentNode.next.next!=null)
+            {
+                currentNode=currentNode.next
+            }
+            data=currentNode.next.data
+            currentNode.next=null
+            length--
+            return data
+        }
+    }
 
     this.printList = function()
     {
@@ -53,6 +79,7 @@ function LinkedList(){
     this.empty = function()
     {
         head=null
+        length=0
     }
 
     this.injectList = function(id)
@@ -61,7 +88,7 @@ function LinkedList(){
                 <i class="bi bi-arrow-right"></i>`
         end=`<i class="bi bi-x-circle"></i>`
 
-        var htmlNode = function(data)
+        function htmlNode(data)
         {
             return `<div class="node" id="node">
                 ${data}
@@ -69,7 +96,7 @@ function LinkedList(){
             <i class="bi bi-arrow-right"></i>`
         }
 
-        var htmlNodeHighlighted = function(data)
+        function htmlNodeHighlighted(data)
         {
             return `<div class="node" id="node" style="border: solid 6px #cc0000;">
                 ${data}
@@ -89,28 +116,71 @@ function LinkedList(){
     }
 }
 
+
+function terminal(id)
+{
+    this.init = function()
+    {
+        document.getElementById(id).innerHTML='<p style="text-align: center;">-: VLL Console v1.0 :-</p>'
+    }
+
+    this.log = function(data)
+    {
+        document.getElementById(id).innerHTML+=('<br>'+data)
+        document.getElementById(id).scrollTop = document.getElementById(id).scrollHeight;
+    }
+}
+
 var list = new LinkedList()
 list.injectList("linkedList")
+
+var con = new terminal("console")
+con.init()
+
 
 function insertNodeHtml()
 {
 
     data=document.getElementById("input_data").value
     document.getElementById("input_data").value=''
-    if(data[0]===' ' || data==='')
-    {
-
-    }
+    if(data[0]===' ' || data===''){}
     else
     {
+        if(list.size()==0)
+        {
+            con.log("List created successfully.")
+        }
         list.add(data)
+        list.injectList("linkedList")
+        con.log("Node Created with data: "+data)
     }
-    list.injectList("linkedList")
 }
 
 function emptyList()
 {
-    list.empty()
-    list.injectList("linkedList")
+    if(list.size()==0)
+    {
+        con.log("Linked List does not exist.")
+    }
+    else
+    {
+        list.empty()
+        list.injectList("linkedList")
+        con.log("List deleted successfully.")
+    }
+}
+
+function deleteNodeHtml()
+{
+    if(list.size()==0)
+    {
+        con.log("Linked List does not exist.")
+    }
+    else
+    {
+        data=list.remove()
+        list.injectList("linkedList")
+        con.log("Node deleted with data: "+data)
+    }
 }
 

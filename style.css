@@ -28,7 +28,8 @@ body
     justify-content: center;
     align-items: center;
     column-gap: 15px;
-    height: 100px;
+    row-gap: 15px;
+    min-height: 100px;
     flex-wrap: wrap;
 }
 
@@ -63,18 +64,6 @@ i
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
-
-.console
-{
-    font-family: 'Source Code Pro', monospace;
-    margin-top: 50px;
-    background-color: black;
-    color: greenyellow;
-    width: 640px;
-    height: 480px;
-    border-radius: 10px;
-    padding: 10px;
-    overflow-y: auto;
-}
-

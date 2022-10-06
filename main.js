@@ -25,6 +25,17 @@ function LinkedList() {
     length++;
   };
 
+  this.insertAtbeginning = function (element) {
+    var node = new Node(element);
+    if (head === null) {
+      head = node;
+    } else {
+      node.next = head;
+      head = node;
+    }
+    length++;
+  };
+
   this.remove = function () {
     if (head == null) {
       return;
@@ -45,6 +56,23 @@ function LinkedList() {
       return data;
     }
   };
+
+  this.removeFromBeginning = function() {
+    if (head == null) {
+      return;
+    }
+    if (head.next === null) {
+      data = head.data;
+      head = null;
+      length = 0;
+      return data;
+    } else {
+      data=head.data
+      head=head.next
+      length--;
+      return data;
+    }
+  }
 
   this.printList = function () {
     if (head === null) {
@@ -76,7 +104,7 @@ function LinkedList() {
     }
 
     function htmlNodeHighlighted(data) {
-      return `<div class="node" id="node" style="border: solid 6px #cc0000;">
+      return `<div class="node" id="node" style="outline: solid 6px #cc0000;">
                 ${data}
             </div>
             <i class="bi bi-arrow-right"></i>`;
@@ -101,6 +129,8 @@ list.injectList("linkedList");
 
 var con = new terminal("console");
 con.init();
+con.log("Type 'help' for command list")
+con.log(" ")
 
 function insertNodeHtml() {
   data = document.getElementById("input_data").value;
@@ -111,6 +141,20 @@ function insertNodeHtml() {
       con.log("List created successfully.");
     }
     list.add(data);
+    list.injectList("linkedList");
+    con.log("Node Created with data: " + data);
+  }
+}
+
+function prependNodeHtml() {
+  data = document.getElementById("input_data").value;
+  document.getElementById("input_data").value = "";
+  if (data[0] === " " || data === "") {
+  } else {
+    if (list.size() == 0) {
+      con.log("List created successfully.");
+    }
+    list.insertAtbeginning(data);
     list.injectList("linkedList");
     con.log("Node Created with data: " + data);
   }
@@ -136,38 +180,72 @@ function deleteNodeHtml() {
   }
 }
 
-function parseCommand() {
-  command = document.getElementById("command").value.split(' ');
-  if (command[0] === "insert") {
-    if(command[1]!=null)
-    {
-        list.add(command[1])
-        list.injectList("linkedList")
-        con.log(command[1]+" inserted successfully.");
-    }
-    else
-    {
-        con.log("wrong syntax");
-    }
+function deleteBeginningNodeHtml() {
+  if (list.size() == 0) {
+    con.log("Linked List does not exist.");
+  } else {
+    data = list.removeFromBeginning();
+    list.injectList("linkedList");
+    con.log("Node deleted with data: " + data);
+  }
 }
-  else if(command[0] === "remove")
-  {
-    if(list.size()===0)
-    {
-        con.log("List is empty")
+
+function parseCommand() {
+  command = document.getElementById("command").value;
+  after = command;
+  con.log("$ " + command);
+  command = command.split(" ");
+  if (command[0] === "insert") {
+    if (command[1] != null) {
+      list.add(command[1]);
+      list.injectList("linkedList");
+      con.log(command[1] + " inserted successfully.");
+    } else {
+      con.log("wrong syntax");
     }
-    else
-    {
-        data=list.remove()
-    list.injectList("linkedList")
-    con.log(data+" deleted successfully.");
+  } else if (command[0] === "ib") {
+    if (command[1] != null) {
+      list.insertAtbeginning(command[1]);
+      list.injectList("linkedList");
+      con.log(command[1] + " inserted successfully.");
+    } else {
+      con.log("wrong syntax");
+    }
+  } else if (command[0] === "remove") {
+    if (list.size() === 0) {
+      con.log("List is empty");
+    } else {
+      data = list.remove();
+      list.injectList("linkedList");
+      con.log(data + " deleted successfully.");
+    }
+  } 
+  else if(command[0] === "rb")
+  {
+    if (list.size() === 0) {
+      con.log("List is empty");
+    } else {
+      data = list.removeFromBeginning();
+      list.injectList("linkedList");
+      con.log(data + " deleted successfully.");
     }
   }
- else if (command[0] === "cls") {
+  else if (command[0] === "size") {
+    con.log(list.size());
+  } else if (command[0] === "cls") {
     con.clear();
-  }
-  else
-  {
-    con.log("'"+command+"' is not a valid command.<br>")
+    con.log("Type 'help' for command list")
+    con.log(" ")
+  } else if (command[0] === "help") {
+    con.log(" ");
+    con.log("Append: insert <data>");
+    con.log("Prepend: ib <data>");
+    con.log("Remove from end: remove");
+    con.log("Remove from Beginning: rb")
+    con.log("Size of list: size");
+    con.log("Clear terminal: cls");
+    con.log(" ");
+  } else {
+    con.log("'" + after + "' is not a valid command.<br>");
   }
 }

@@ -288,7 +288,6 @@ function select() {
     return;
   }
   document.getElementById("selection").innerHTML = `<button type="button" class="btn btn-primary btn-lg" onclick="Left()"><i class="right bi bi-arrow-left"></i></button>
-                                                    <button type="button" class="btn btn-outline-dark btn-lg" onclick="select()">Select</button>
                                                     <button type="button" class="btn btn-outline-dark btn-lg" onclick="deselect()">Deselect</button>
                                                     <button type="button" class="btn btn-primary btn-lg" onclick="Right()"><i class="left bi bi-arrow-right"></i></button>`
   document.getElementById("indel").innerHTML = `<button type="button" class="btn btn-primary btn-lg" onclick="insertAfterHtml()">Insert After Selected Node</button>

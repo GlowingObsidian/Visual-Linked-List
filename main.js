@@ -54,7 +54,7 @@ function LinkedList() {
       }
       data = currentNode.next.data;
       currentNode.next = null;
-      sel = currentNode;
+      sel!=null?sel = currentNode:
       length--;
       return data;
     }
@@ -67,11 +67,13 @@ function LinkedList() {
     if (head.next === null) {
       data = head.data;
       head = null;
+      sel=null;
       length = 0;
       return data;
     } else {
       data = head.data;
       head = head.next;
+      sel!=null?sel=head:
       length--;
       return data;
     }
@@ -96,6 +98,10 @@ function LinkedList() {
     if (sel === null) {
       sel = head;
     }
+  };
+
+  this.deselect = function () {
+    sel=null;
   };
 
   this.rightSel = function () {
@@ -127,6 +133,7 @@ function LinkedList() {
     var node = new Node(element);
     node.next = sel.next;
     sel.next = node;
+    length++
     return true;
   };
 
@@ -136,8 +143,16 @@ function LinkedList() {
     }
     if (head == sel) {
       data = sel.data;
-      head = null;
-      sel = null;
+      if(head.next === null)
+      {
+        head = null;
+      }
+      else
+      {
+        head = head.next
+      }
+      sel = head
+      length --
       return data;
     }
     currentNode = head;
@@ -147,6 +162,7 @@ function LinkedList() {
     data = sel.data;
     currentNode.next = sel.next;
     sel = currentNode;
+    length --
     return data;
   };
 
@@ -229,6 +245,7 @@ function emptyList() {
     con.log("Linked List does not exist.");
   } else {
     list.empty();
+    deselect();
     list.injectList("linkedList");
     con.log("List deleted successfully.");
   }
@@ -270,8 +287,22 @@ function select() {
     con.log("Nothing to select");
     return;
   }
+  document.getElementById("selection").innerHTML = `<button type="button" class="btn btn-primary btn-lg" onclick="Left()"><i class="right bi bi-arrow-left"></i></button>
+                                                    <button type="button" class="btn btn-outline-dark btn-lg" onclick="select()">Select</button>
+                                                    <button type="button" class="btn btn-outline-dark btn-lg" onclick="deselect()">Deselect</button>
+                                                    <button type="button" class="btn btn-primary btn-lg" onclick="Right()"><i class="left bi bi-arrow-right"></i></button>`
+  document.getElementById("indel").innerHTML = `<button type="button" class="btn btn-primary btn-lg" onclick="insertAfterHtml()">Insert After Selected Node</button>
+                                                <button type="button" class="btn btn-primary btn-lg" onclick="deleteAfterHtml()">Delete Selected Node</button>`
   list.select();
   list.injectList("linkedList");
+}
+
+function deselect()
+{
+  document.getElementById("selection").innerHTML = `<button type="button" class="btn btn-primary btn-lg" onclick="select()">Select</button>`
+  document.getElementById("indel").innerHTML = ''
+  list.deselect()
+  list.injectList("linkedList")
 }
 
 function Left() {
@@ -302,6 +333,10 @@ function deleteAfterHtml() {
   if (data != false) {
     con.log("Node deleted with data: " + data);
     list.injectList("linkedList");
+    if(list.size()==0)
+    {
+      deselect();
+    }
   }
 }
 
@@ -392,7 +427,7 @@ function commands(command) {
     con.clear();
     con.log("Type 'help' for command list");
     con.log(" ");
-    con.log("To select nodes, press the select button then use the arrow buttons only in a populated LL.");
+    con.log("Perform node specific operations using the select button.");
     con.log(" ");
   } else if (command[0] === "help") {
     con.log(" ");

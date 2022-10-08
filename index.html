@@ -30,15 +30,10 @@
             </div>
         </div>
         <button type="button" class="btn btn-primary btn-lg" onclick="deleteNodeHtml()">Delete</button>
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-primary btn-lg" onclick="Left()"><i
-                    class="right bi bi-arrow-left"></i></button>
-            <button type="button" class="btn btn-info btn-lg" onclick="select()">Select</button>
-            <button type="button" class="btn btn-primary btn-lg" onclick="Right()"><i
-                    class="left bi bi-arrow-right"></i></button>
+        <div id="selection" class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary btn-lg" onclick="select()">Select</button>
         </div>
-        <button type="button" class="btn btn-primary btn-lg" onclick="insertAfterHtml()">Insert After Node</button>
-        <button type="button" class="btn btn-primary btn-lg" onclick="deleteAfterHtml()">Delete Selected Node</button>
+        <div id="indel"></div>
     </div>
     <div id="linkedList"></div>
     <div class="console_wrapper">

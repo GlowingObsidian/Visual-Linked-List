@@ -3,6 +3,7 @@
 .console {
   font-family: "Source Code Pro", monospace;
   margin-top: 50px;
+  margin-bottom: 50px;
   background-color: black;
   color: greenyellow;
   width: 640px;
